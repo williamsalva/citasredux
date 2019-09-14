@@ -1,14 +1,14 @@
 const initialState ={
-    citas:[1,2,3]
+    error:false
 }
 
 export default function(state= initialState, action){
 
     switch (action.type) {
-        case 'AGREGAR_CITA':
+        case 'VALIDAR_FORMULARIO':
             return {
                 ...state,
-                citas: [...state.citas, action.payload]
+                error:action.payload
             }
             
           

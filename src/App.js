@@ -1,9 +1,16 @@
 import React from 'react';
+import Agregarcita from './comonentes/AgregarCita'
+//Redux
+import store from './store';
+import {Provider} from 'react-redux';
+
+
 
 
 function App() {
   return (
-    <div className="container">
+    <Provider store={store}>
+       <div className="container">
      
      <header>
        <h1>Administrador de pacientes</h1>
@@ -11,7 +18,7 @@ function App() {
 
      <div className="row">
        <div className="col-md-6">
-          formulario
+          <Agregarcita/>
        </div>
        <div className="col-md-6">
           listado
@@ -19,6 +26,10 @@ function App() {
 
      </div>
     </div>
+
+
+    </Provider>
+   
   );
 }
 
