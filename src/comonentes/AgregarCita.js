@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 
+import { useDispatch,useSelector} from 'react-redux';
+import {agregarCitaAction} from '../actions/citasActions';
+import {validarFormularioAction} from '../actions/validarActions';
+import uuid from 'uuid/v4';
 
 const AgregarCita = () => {
     //state componente
@@ -9,11 +13,58 @@ const AgregarCita = () => {
     const [fecha,guardarFecha] = useState ('');
     const [hora,guardarHora] = useState ('');
     const [sintomas,guardarSintomas] = useState ('');
+
+    // Dispatch para ejecutar
+    
+    const dispatch = useDispatch();
+    const agregarNuevaCita = (cita)=> dispatch(agregarCitaAction(cita));
+    const validarFormulario = (estado) => dispatch(validarFormularioAction(estado));
+
+     //useSelector para poder usar el state de redux 
+    const error = useSelector((state)=> state.error);
+    
+
+ 
+
+
+    // cuando el formulario es enviado
+      const submitNuevaCita = e =>{
+        e.preventDefault();
+
+        //validar formulario
+
+        if (mascota.trim()=== ''||propietario.trim()=== ''||fecha.trim()=== ''||hora.trim()=== ''
+        ||sintomas.trim()=== '') {
+            validarFormulario(true);
+            return
+      }
+      validarFormulario(false);
+
+
+        //crear 
+        
+        agregarNuevaCita({
+            id:uuid(),
+            mascota,
+            propietario,
+            fecha,
+            hora,
+            sintomas
+        })
+
+        guardarMascota('');
+        guardarPropietario('');
+        guardarSintomas('');
+        guardarHora('');
+        guardarFecha('');
+
+
+    }
       return (
         <div className="card mt-5">
             <div className="card-body">
                 <h2 className="card-title text-center mb-5">Agrega las citas aqui</h2>
-                <form>
+                <form onSubmit={submitNuevaCita}>
                     <div className="form-group row">
                         <label className="col-sm-4 col-lg-2 col-form-label">Nombre Mascota</label>
                         <div className="col-sm-8 col-lg-10">
@@ -78,6 +129,9 @@ const AgregarCita = () => {
                         </div>
                     </div>
                 </form>
+
+                {error.error ? <div className="alert alert-danger text-center p2"> todos 
+                los campos son obligatorios </div> :null}
                
             </div>
     </div>

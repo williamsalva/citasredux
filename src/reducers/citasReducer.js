@@ -1,5 +1,5 @@
 const initialState ={
-    citas:[1,2,3]
+    citas:[]
 }
 
 export default function(state= initialState, action){
@@ -9,6 +9,13 @@ export default function(state= initialState, action){
             return {
                 ...state,
                 citas: [...state.citas, action.payload]
+            }
+
+        case 'BORRAR_CITA':
+            return {
+                ...state, 
+                citas: state.citas.filter(cita => cita.id !== action.payload )
+
             }
             
           
